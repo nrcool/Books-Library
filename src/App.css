@@ -1,22 +1,59 @@
+*{
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
+  width: 100vw;
+  height:100vh;
 }
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.mainpage{
+  width: 100%;
+  height:100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.booksBlock{
+flex:1;
+display: flex;
+justify-content: space-around;
+}
+#signInSection{
+  display: flex;
 }
 
-.App-link {
-  color: #09d3ac;
+.login-form,.register-form{
+  color: white;
+  position:absolute;
+  top: 50%;
+  left:50%;
+  width:500px;
+  height:500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform:translate(-50%,-50%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px 5px white;
+  background-color: rgba(19, 16, 16,0.6);
+}
+.auth-logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-inputs{
+  width:300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.btn{
+  background-color: #0269D9;
+  color: white;
+}
+.btn:hover{
+  background-color: rgb(1, 14, 27);
+  color: white;
 }
