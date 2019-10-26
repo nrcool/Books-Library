@@ -1,47 +1,42 @@
 
 import { Pagination } from "react-bootstrap"
-
+import {connect} from "react-redux"
 import React, { Component } from 'react'
 
-export default class PaginationBasic extends Component {
+class PaginationBasic extends Component {
     state={
-        active: false,
-        totalNumber:20,
-        items : []
-    }
-    handleActive=(num)=>{ 
-        this.setState({
-            active:true
-        },()=>{
-            let item=this.state.items
-            console.log(item[num])
-          
-        })
-       
-       
+        items : [],
+        data:this.props
     }
     render() {
-        console.log(this.state.items)
         let items=this.state.items
-        for (let number = 1; number <= this.state.totalNumber; number++) {
-            items.push(
-                  <Pagination.Item key={number} active={this.state.active} onClick={()=>this.handleActive(number)}>
-                  {number}
-                   </Pagination.Item>,
-              )
+        for (let number = this.state.data.Start; number <= this.state.data.Start+15; number++) {
+                     items.push(
+                  <Pagination.Item key={number} active={number===this.state.data.currentPage} onClick={()=>this.props.handleActive(number)}>
+                   {number}
+                   </Pagination.Item>)  
+           
           }
         return (
             <Pagination>
-                <Pagination.First />
-                <Pagination.Prev />
+               <Pagination.Prev onClick={()=>this.props.prev()}/>
+                
                 {this.state.items}
-                <Pagination.Next />
-                <Pagination.Last />
+               <Pagination.Next onClick={()=>this.props.next()}/>
             </Pagination>
         )
     }
 }
 
+const mapStateToProps=(state)=>{
+    return state
+    }
+    const mapDispatchToProps=(dispatch)=>{
+        return{
+            prev:()=>dispatch({type:"prev"}),
+            next:()=>dispatch({type:"next"})
+        }
+    }   
+   
 
-
-    
+export default connect(mapStateToProps,mapDispatchToProps)(PaginationBasic )
