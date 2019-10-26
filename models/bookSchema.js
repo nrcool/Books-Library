@@ -2,8 +2,8 @@ const mongoose=require("mongoose");
 const Schema=mongoose.Schema
 
 let Book=new Schema({
-        title: String,
-      pageCount:Integer,
+      title: String,
+      pageCount:String,
       publishedDate:String,
       thumbnailUrl:String ,
       shortDescription:String,
@@ -11,8 +11,8 @@ let Book=new Schema({
       BorrowStatus:Boolean,
       BorrowDate:Date,
       ReturnDate:Date,
-      authors:String,
-      categories:String
+      authors:Array,
+      categories:Array
 })
 
 
