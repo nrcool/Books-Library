@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faAt, faUser } from '@fortawesome/free-solid-svg-icons'
+import {withRouter} from "react-router-dom"
 
-export default class Signup extends Component {
+class Signup extends Component {
+  state={
+    error:null
+  }
     signupSubmit=(e)=>{
         e.preventDefault();
         let form= new FormData(e.target)
@@ -15,12 +19,23 @@ export default class Signup extends Component {
         e.target.reset()
         fetch("http://localhost:4000/signup",{method:"POST",body:data})
         .then(res=>res.json())
-        .then(res1=>console.log(res1))
+        .then(res1=>{
+          if(res1.success){
+             this.setState({
+               error:res1.message
+             },()=>this.props.history.push("/mainpage") )
+          }else{
+            this.setState({
+              error:res1.message
+            })
+          }
+        })
         .catch((err)=>console.log(err.message))
 
     }
 
     render() {
+      console.log(this.props)
         return (
             <div className="register-form">
             <form className="form-inputs" name="signInForm" onSubmit={this.signupSubmit}>
@@ -30,7 +45,7 @@ export default class Signup extends Component {
               <div className="form-group">
                 <label className="input-label" htmlFor="username"><FontAwesomeIcon icon={faUser} /> Confirm
                         Password*</label>
-                <input type="password" className="form-control" name="username" id="username"
+                <input type="text" className="form-control" name="username" id="username"
                   placeholder="UserName" />
               </div>
               <div className="form-group">
@@ -44,8 +59,11 @@ export default class Signup extends Component {
                   placeholder="password" />
               </div>
               <button type="submit" style={{width:"100px",margin:"0 auto"}} className="btn btn-primary btn-block">Register</button>
+              {this.state.error&& <div>{this.state.error}</div>}
             </form>
           </div>
         )
     }
 }
+
+export default withRouter(Signup)
