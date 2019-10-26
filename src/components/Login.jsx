@@ -1,17 +1,39 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock,faUser } from '@fortawesome/free-solid-svg-icons'
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux"
 
-export default class Login extends Component {
-
+class Login extends Component {
+  state={
+    error:null
+  }
     loginSubmit=(e)=>{
         e.preventDefault();
         let data=new URLSearchParams();
         for(const pair of new FormData(e.target)){
-            console.log(pair)
+
             data.append(pair[0],pair[1])
         }
-        console.log(data)
+        e.target.reset()
+        fetch("http://localhost:4000/login",{method:"POST",body:data})
+        .then(res=>res.json())
+        .then(res1=>{
+          if(res1.success){
+             this.setState({
+               error:res1.message
+             },()=>{
+               this.props.loginUser(true)
+               this.props.history.push("/mainpage")
+              } )
+          }else{
+            this.setState({
+              error:res1.message
+            })
+          }
+        })
+        .catch((err)=>console.log(err.message))
+
     }
     render() {
         return (
@@ -22,7 +44,7 @@ export default class Login extends Component {
               </p>
               <div className="form-group">
                 <label className="input-label" htmlFor="usernamel"><FontAwesomeIcon icon={faUser} /> Email</label>
-                <input type="email" className="form-control" name="username" id="username"
+                <input type="username" className="form-control" name="username" id="username"
                   placeholder="UserName" />
               </div>
               <div className="form-group">
@@ -38,8 +60,18 @@ export default class Login extends Component {
                 </p>
               </div>
               <button type="submit" style={{width:"100px",margin:"0 auto"}} className=" btn btn-primary btn-block">Submit</button>
+              {this.state.error&& <div>{this.state.error}</div>}
             </form>
           </div>
         )
     }
 }
+const mapStateToProps=(state)=>{
+  return state
+}
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    loginUser:(value)=>dispatch({type:"loggedin",payload:value})
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Login))
