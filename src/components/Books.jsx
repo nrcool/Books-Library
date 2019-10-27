@@ -55,6 +55,17 @@ class Books extends Component {
         })
         this.props.borrowBookfunc(this.state.borrowBook)
         console.log(this.props)
+        fetch("http://localhost:4000/books/bookborrow",{
+            method:"POST",
+            headers:{"Content-Type": "application/json"},
+            body:JSON.stringify({
+                user:this.props.User,
+                book:this.state.borrowBook,
+                dueDate:this.state.dueDate
+            })
+        })
+        .then(res=>res.json())
+        .then(res1=>console.log(res1))
     }
     selectDays=(e)=>{
         let dayselected=e.target.value;
