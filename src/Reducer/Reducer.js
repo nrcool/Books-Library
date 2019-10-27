@@ -2,6 +2,7 @@ const initialState={
     User:"",
     loginUser:false,
     books: [],
+    booksBorrowed:[],
     currentPage:1,
     nextPage:2,
     prevPage:0,
@@ -20,7 +21,7 @@ const Reducer=(state=initialState,action)=>{
             }
         case "loggedin":
             return{
-                ...state,loginUser:action.payload
+                ...state,loginUser:action.payload.login,User:action.payload.user
             }
         case "next":
             return{
@@ -30,6 +31,10 @@ const Reducer=(state=initialState,action)=>{
               return{
              ...state,Start:state.Start-1
                }
+        case "bookborrow":
+            return{
+                ...state,booksBorrowed:[...state.booksBorrowed,action.payload]
+            }
         default:
             return state
     }
