@@ -23,7 +23,7 @@ class Login extends Component {
              this.setState({
                error:res1.message
              },()=>{
-               this.props.loginUser(true)
+               this.props.loginUser({user:res1.user,login:res1.success})
                this.props.history.push("/mainpage")
               } )
           }else{
