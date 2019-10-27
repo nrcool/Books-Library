@@ -3,6 +3,7 @@ const Configuration = require("../configration/congif")
 const mongoose = require("mongoose")
 const Books =require("../models/bookSchema")
 let config = Configuration()
+let User=require("../models/userSchema")
 
 mongoose.connect(config.db, { useNewUrlParser: true,useCreateIndex:true, useUnifiedTopology: true }, () => console.log("db connected"))
 
@@ -26,7 +27,20 @@ const getBooks = (req, res, next) => {
   
 }
 
+const Borrowbook=(req,res,next)=>{
+  
+    Books.findOne({_id:req.body.book._id}).then(book=>{
+        book.DueDate=req.body.dueDate
+        book.save().then((addbook)=>{
+             User.findOne({username:req.body.user}).then(user=>{
+        user.bookBorrow.push(addbook)
+        user.save()
+    })
+        })
+    })
+   
+}
 module.exports={
-    getBooks
+    getBooks,Borrowbook
 }
 
