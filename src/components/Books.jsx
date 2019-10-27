@@ -11,7 +11,8 @@ class Books extends Component {
             loading: true,
             limit: 10,
             show: false,
-            dueDate:new Date()
+            dueDate:new Date(),
+            borrowBook:""
         }
     }
 
@@ -30,10 +31,11 @@ class Books extends Component {
         this.props.funcCurrentPage(num)
         this.getBookdData()
     }
-    borrow = (e) => {
+    borrow = (book,e) => {
         e.preventDefault()
         this.setState({
-            show: true
+            show: true,
+            borrowBook:book
         })
         console.log("borrow book")
     }
@@ -51,6 +53,8 @@ class Books extends Component {
         this.setState({
             show: false
         })
+        this.props.borrowBookfunc(this.state.borrowBook)
+        console.log(this.props)
     }
     selectDays=(e)=>{
         let dayselected=e.target.value;
@@ -61,27 +65,27 @@ class Books extends Component {
         })
     }
     render() {
-    
+   console.log(this.props)
         return (
             <div className="booksBlock">
 
                 <Container className="bookContainer rounded mt-1 " >
                     {!this.state.loading ? <> {this.props.books.map((book, i) => {
-                        return (<><Link to={{ pathname: `/${book.title}`, state: { book: book } }} key={i}> <Row className="bg-dark p-1 text-white" style={{ width: "500px", boxShadow: "5px 2px 10px 10px black" }}>
+                        return (<Link to={{ pathname: `/${book.title}`, state: { book: book } }} key={i}> <Row className="bg-dark p-1 text-white" style={{ width: "500px", boxShadow: "5px 2px 10px 10px black" }}>
                             <Col md={5} xs={5}>
                                 <p>Book Title :<span>{book.title} </span></p>
                                 <p>Author Name :<span>{book.authors[0]} </span></p>
                                 <p>Year:<span>{book.publishedDate} </span></p>
                             </Col>
                             <Col md={3} xs={3} className="d-flex flex-column align-items-center">
-                                <Button variant="success" className="bg-success" onClick={this.borrow}>Borrow</Button>
-                                <Button variant="warning" className="bg-warning" onClick={this.return}>Return</Button>
-                                <h5 className="text-white"><i>Available </i></h5>
+                                <Button variant="success" className="bg-success" disabled={this.props.booksBorrowed.includes(book)} onClick={(e)=>this.borrow(book,e)}>Borrow</Button>
+                                <Button variant="warning" className="bg-warning" disabled={!this.props.booksBorrowed.includes(book)} onClick={this.return}>Return</Button>
+                                <h5 className="text-white">{this.props.booksBorrowed.includes(book)?<i>Not Available </i> :<i>Available </i> }</h5>
                             </Col>
                             <Col md={3} xs={3}>
                                 <Image src={book.thumbnailUrl} width="120" height="150" rounded />
                             </Col>
-                        </Row> </Link></>)
+                        </Row> </Link>)
                     })} <PaginationBasic
                             handleActive={this.handleActive}
                         /> </> : <Spinner style={{ marginTop: "20px", width: "300px", height: "300px" }} animation="border" as="h1" variant="dark" role="status">
@@ -126,7 +130,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         mybooks: (res) => dispatch({ type: "getBooks", payload: res }),
-        funcCurrentPage: (num) => dispatch({ type: "changecurrentpage", payload: num })
+        funcCurrentPage: (num) => dispatch({ type: "changecurrentpage", payload: num }),
+        borrowBookfunc:(book)=>dispatch({type:"bookborrow",payload:book})
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Books)
