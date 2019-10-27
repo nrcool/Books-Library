@@ -10,7 +10,7 @@ let Book=new Schema({
       longDescription: String,
       BorrowStatus:Boolean,
       BorrowDate:Date,
-      ReturnDate:Date,
+      DueDate:Date,
       authors:Array,
       categories:Array
 })
