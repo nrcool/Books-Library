@@ -14,7 +14,9 @@ class App extends React.Component {
         <Switch> 
    <Route exact path="/" component={LoginSignup} />
     <Route path="/mainpage" component={MainPage}/>
-    <Route path="/:booktitle" component={BookItem}/>
+    <Route exact path="/:booktitle" component={BookItem}/>
+    <Route path="/mainpage/bytitle" component={MainPage}/>
+    <Route path="/mainpage/byauthor" component={MainPage} />
     </Switch>
     </Router>
   );
