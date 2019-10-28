@@ -3,6 +3,7 @@ import { Col, Row, Container, Image, Button, Spinner, Modal, ButtonToolbar} from
 import { Link } from "react-router-dom"
 import PaginationBasic from "./Pagination"
 import { connect } from "react-redux"
+import msToTime from "./timer"
 
 class Books extends Component {
     constructor(props) {
@@ -65,7 +66,11 @@ class Books extends Component {
             })
         })
         .then(res=>res.json())
-        .then(res1=>console.log(res1))
+        .then(res1=>{
+            this.setState({
+                dueDate:new Date()
+            })
+        })
     }
     selectDays=(e)=>{
         let dayselected=e.target.value;
@@ -76,7 +81,7 @@ class Books extends Component {
         })
     }
     render() {
-   console.log(this.props)
+   console.log(this.props.books)
         return (
             <div className="booksBlock">
 
@@ -91,7 +96,7 @@ class Books extends Component {
                             <Col md={3} xs={3} className="d-flex flex-column align-items-center">
                                 <Button variant="success" className="bg-success" disabled={this.props.booksBorrowed.includes(book)} onClick={(e)=>this.borrow(book,e)}>Borrow</Button>
                                 <Button variant="warning" className="bg-warning" disabled={!this.props.booksBorrowed.includes(book)} onClick={this.return}>Return</Button>
-                                <h5 className="text-white">{this.props.booksBorrowed.includes(book)?<i>Not Available </i> :<i>Available </i> }</h5>
+                                <h5 className="text-white">{this.props.booksBorrowed.includes(book)?<i>{msToTime(book.DueDate)}</i> :<i>Available </i> }</h5>
                             </Col>
                             <Col md={3} xs={3}>
                                 <Image src={book.thumbnailUrl} width="120" height="150" rounded />
