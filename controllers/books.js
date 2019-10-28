@@ -73,8 +73,24 @@ const sortByTitle =(req,res,next)=>{
     })
 }
 
+const sortByAuthor=(req,res,next)=>{
+    Books.find({}).then(books=>{
+        let sortedBooks=books.sort((a,b)=>{
+            if(a.author>b.author){
+                return 1
+            }else{
+                return -1
+            }
+        })
+        let result=sortedBooks.slice(req.body.startIndex*10,req.body.endIndex*10)
+        res.status(200).json({
+            success:true,
+            books:result
+        })
+    })
+}
 
 module.exports={
-    getBooks,Borrowbook,search,sortByTitle
+    getBooks,Borrowbook,search,sortByTitle,sortByAuthor
 }
 
