@@ -15,7 +15,6 @@ const Reducer=(state=initialState,action)=>{
         case "getBooks":
             return {...state,books:action.payload.books,nextPage:action.payload.nextPage,prevPage:action.payload.prevPage,totalPages:action.payload.totalPages}
         case "changecurrentpage":
-            console.log(action.payload);
             return{
                 ...state,currentPage:action.payload
             }
@@ -34,6 +33,10 @@ const Reducer=(state=initialState,action)=>{
         case "bookborrow":
             return{
                 ...state,booksBorrowed:[...state.booksBorrowed,action.payload]
+            }
+        case "searchbook":
+            return {
+                ...state,books:action.payload
             }
         default:
             return state
