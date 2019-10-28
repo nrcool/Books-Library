@@ -87,7 +87,7 @@ class Books extends Component {
 
                 <Container className="bookContainer rounded mt-1 " >
                     {!this.state.loading ? <> {this.props.books.map((book, i) => {
-                        return (<Link to={{ pathname: `/${book.title}`, state: { book: book } }} key={i}> <Row className="bg-dark p-1 text-white" style={{ width: "500px", boxShadow: "5px 2px 10px 10px black" }}>
+                        return (<Link to={{ pathname: `/${book.title}`, state: { book: book } }} key={i}> <Row className="bg-dark p-1 text-white" style={{ width: "500px", height:"200px", overflow:"hidden",padding:"5px",margin:"5px", boxShadow: "5px 2px 10px 10px black" }}>
                             <Col md={5} xs={5}>
                                 <p>Book Title :<span>{book.title} </span></p>
                                 <p>Author Name :<span>{book.authors[0]} </span></p>
