@@ -40,7 +40,41 @@ const Borrowbook=(req,res,next)=>{
     })
    
 }
+
+const search=(req,res,next)=>{
+    Books.findOne({title:req.body.search}).then(book=>{
+        if(book){
+            res.status(200).json({
+                book:book,
+                success:true
+            })
+        }else{
+            res.status(404).json({
+                success:false
+            })
+        }
+    })
+}
+
+const sortByTitle =(req,res,next)=>{
+    Books.find({}).then(books=>{
+        let sortedBooks=books.sort((a,b)=>{
+            if(a.title>b.title){
+                return 1
+            }else{
+                return -1
+            }
+        })
+        let result=sortedBooks.slice(req.body.startIndex*10,req.body.endIndex*10)
+        res.status(200).json({
+            success:true,
+            books:result
+        })
+    })
+}
+
+
 module.exports={
-    getBooks,Borrowbook
+    getBooks,Borrowbook,search,sortByTitle
 }
 
