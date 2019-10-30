@@ -1,0 +1,17 @@
+.bookItem{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+.bookItem h1{
+    padding: 10px;
+}
+.bookItem p{
+    width: 80%;
+    padding: 20px;
+    text-align: center;
+    margin:0 auto;
+    background:linear-gradient(45deg,black,brown);
+    border-radius: 20px;
+}
