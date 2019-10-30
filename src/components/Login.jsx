@@ -4,6 +4,7 @@ import { faLock,faUser } from '@fortawesome/free-solid-svg-icons'
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 
+
 class Login extends Component {
   state={
     error:null
@@ -23,8 +24,9 @@ class Login extends Component {
              this.setState({
                error:res1.message
              },()=>{
-               this.props.loginUser({user:res1.user,login:res1.success})
-               this.props.history.push("/mainpage")
+               this.props.loginUser({user:res1.user,login:res1.success}) 
+               localStorage.setItem("Token4user",JSON.stringify({token:res1.token,username:res1.user}))      
+              this.props.history.push("/mainpage")
               } )
           }else{
             this.setState({

@@ -23,7 +23,9 @@ class Signup extends Component {
           if(res1.success){
              this.setState({
                error:res1.message
-             },()=>this.props.history.push("/mainpage") )
+             },()=>{
+              localStorage.setItem("Token4user",JSON.stringify({token:res1.token,username:res1.user}))
+               this.props.history.push("/mainpage") })
           }else{
             this.setState({
               error:res1.message
