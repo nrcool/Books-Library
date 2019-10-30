@@ -14,6 +14,7 @@ import { connect } from "react-redux"
     .then(res=>res.json())
     .then(res1=>{
       this.props.SearchedBook([res1.book])
+      this.setState({search:""})
       console.log(res1)})
   }
 
