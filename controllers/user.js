@@ -90,7 +90,24 @@ const userLogin = (req, res, next) => {
     })
 }
 
+const userBooks=(req,res,next)=>{
+    console.log(req.body.user);
+    User.findOne({username:req.body.user}).then(user=>{
+        if(user){
+            res.status(500).json({
+                success: true,
+                message:null,
+                user:user
+            })
+        }else{
+            res.status(500).json({
+                success: false,
+                message:"something wrong"
+            })
+        }
+    })
+}
 
 module.exports = {
-    userLogin, userSignup
+    userLogin, userSignup,userBooks
 }
