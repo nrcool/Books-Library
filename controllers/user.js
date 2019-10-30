@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const User =require("../models/userSchema")
 const bcrypt=require("bcrypt")
 let config = Configuration()
+const jwt = require("jsonwebtoken")
 
 mongoose.connect(config.db, { useNewUrlParser: true,useCreateIndex:true, useUnifiedTopology: true }, () => console.log("db connected"))
 
@@ -16,18 +17,33 @@ const userSignup = (req, res, next) => {
                     success: false,
                     message:"Error from server"
                 }) 
-            }else{
-                let Newuser=new User({
+            }else{     
+        let Newuser=new User({
         username:req.body.username,
         email:req.body.email,
        password:hash
     })
-    Newuser.save()
-    res.status(200).json({
+    Newuser.save().then(()=>{
+        console.log(config.secretKey);
+        jwt.sign({username:req.body.username},config.secretKey,{expiresIn:"1h"},(err,token)=>{
+            if(err){
+                res.status(500).json({
+                    success: false,
+                    message:"Error from server"
+                }) 
+            }else{
+               res.status(200).json({
         user: req.body.username,
         success: true,
-        message:null
+        message:null,
+        token:token
+
+    })  
+            }
+        })
+       
     })
+    
             }
         })
         
@@ -45,16 +61,22 @@ const userLogin = (req, res, next) => {
     User.findOne({username:req.body.username,}).then(user=>{
         if(user){
             bcrypt.compare(req.body.password,user.password).then(result=>{
-               if( result){
-                   res.status(200).json({
+               if(result){
+                jwt.sign({username:req.body.username},config.secretKey,{expiresIn:"1h"},(err,token)=>{
+                    if(err){
+                        res.status(500).json({
+                            success: false,
+                            message:"Error from server"
+                        }) 
+                    }else{
+                       res.status(200).json({
                 user: req.body.username,
                 success: true,
-                message:null
-            })
-               }else{
-                res.status(200).json({
-                    success: false,
-                    message:"password incorrect"
+                message:null,
+                token:token
+        
+            })  
+                    }
                 })
                }
             })
