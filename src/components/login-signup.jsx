@@ -4,12 +4,20 @@ import Signup from './Signup';
 import image from "../img/2.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {connect} from "react-redux"
 
 
-export default class LoginSignup extends Component {
+class LoginSignup extends Component {
     state={
         login:true,
         register:false
+      }
+      componentDidMount(){
+        let localData=localStorage.getItem("Token4user")
+        if(localData){
+          this.props.loginUser({user:localData.username,login:true})
+          this.props.history.push("/mainpage")
+        }
       }
     render() {
         return (
@@ -28,3 +36,14 @@ export default class LoginSignup extends Component {
         )
     }
 }
+
+const mapStateToProps=(state)=>{
+  return state
+}
+ const mapDispatchToProps=(dispatch)=>{
+  return {
+    loginUser:(value)=>dispatch({type:"loggedin",payload:value})
+  }
+} 
+
+export default  connect(mapStateToProps,mapDispatchToProps)(LoginSignup)
