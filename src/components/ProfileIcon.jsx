@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom"
 
 class ProfileIcon extends Component {
     handleSignout=()=>{
-        localStorage.removeItem("userToken")
+        localStorage.removeItem("Token4user")
         this.props.history.push("/")
     }
     render() {
