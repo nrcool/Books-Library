@@ -20,7 +20,6 @@ class ProfileIcon extends Component {
             .then(res1=>this.props.SearchedBook(res1.user.bookBorrow) )
     }
     render() {
-        console.log(this.props)
         return (
             <DropdownButton id="dropdown-basic-button" title="Profile">
             <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
