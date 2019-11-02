@@ -34,7 +34,9 @@ const Borrowbook=(req,res,next)=>{
         book.save().then((addbook)=>{
              User.findOne({username:req.body.user}).then(user=>{
         user.bookBorrow.push(addbook)
-        user.save()
+        user.save().then(()=>{
+            res.send({success:true})
+        })
     })
         })
     })
