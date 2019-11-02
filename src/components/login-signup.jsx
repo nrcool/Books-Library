@@ -14,7 +14,6 @@ class LoginSignup extends Component {
       }
       componentDidMount(){
         let localData=JSON.parse(localStorage.getItem("Token4user"))
-        console.log(localData.username)
         if(localData){
           this.props.loginUser({user:localData.username,login:true})
           this.props.history.push("/mainpage")
