@@ -1,7 +1,9 @@
 const msToTime = (dd) => {
+    console.log(dd);
     let d=new Date(dd).getTime()
-    console.log(typeof d);
-    let totaltime=d-(new Date().getTime())
+    let c=new Date().getTime()
+    console.log(d>c);
+    let totaltime=d-c
     let day=0
     if (totaltime > 86400000) {
         day = Math.floor(totaltime / 86400000)
@@ -14,7 +16,6 @@ const msToTime = (dd) => {
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
-    console.log(hours,minutes,seconds);
     if (day > 0) {
         totaltime = day + " Days " + hours + ":" + minutes + ":" + seconds;
     } else {
