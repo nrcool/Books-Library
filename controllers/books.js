@@ -42,6 +42,23 @@ const Borrowbook=(req,res,next)=>{
     })
    
 }
+const bookReturn=(req,res,next)=>{
+    Books.findOne({_id:req.body.book._id}).then(book=>{
+        book.DueDate=null;
+        book.save().then(()=>{
+            User.findOne({username:req.body.user}).then(user=>{
+                let index=user.bookBorrow.indexOf(book)
+                user.bookBorrow.splice(index,1)
+                user.save().then(()=>{
+                    res.send({
+                        success:true
+                    })
+                })
+            })
+        })
+    })
+}
+
 
 const search=(req,res,next)=>{
     Books.findOne({title:req.body.search}).then(book=>{
@@ -93,6 +110,6 @@ const sortByAuthor=(req,res,next)=>{
 }
 
 module.exports={
-    getBooks,Borrowbook,search,sortByTitle,sortByAuthor
+    getBooks,Borrowbook,search,sortByTitle,sortByAuthor,bookReturn
 }
 
