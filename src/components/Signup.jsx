@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faAt, faUser } from '@fortawesome/free-solid-svg-icons'
 import {withRouter} from "react-router-dom"
+import config from "../clientConfig"
 
 class Signup extends Component {
   state={
@@ -17,7 +18,7 @@ class Signup extends Component {
             data.append(pair[0],pair[1])
         }
         e.target.reset()
-        fetch("http://localhost:4000/signup",{method:"POST",body:data})
+        fetch(`${config().server}/signup`,{method:"POST",body:data})
         .then(res=>res.json())
         .then(res1=>{
           if(res1.success){

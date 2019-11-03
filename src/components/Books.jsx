@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import PaginationBasic from "./Pagination"
 import { connect } from "react-redux"
 import msToTime from "./timer"
+import config from "../clientConfig"
 
 class Books extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class Books extends Component {
         this.getBookdData()
     }
     getBookdData = () => {
-        fetch(`http://localhost:4000/books?page=${this.props.currentPage}&limit=${this.state.limit}`)
+        fetch(`${config().server}/books?page=${this.props.currentPage}&limit=${this.state.limit}`)
             .then(res => res.json())
             .then(res1 => this.setState({ loading: false }, () => {
                 this.props.mybooks(res1)
@@ -55,7 +56,7 @@ class Books extends Component {
         })
         this.props.borrowBookfunc(this.state.borrowBook)
         console.log(this.props)
-        fetch("http://localhost:4000/books/bookborrow",{
+        fetch(`${config().server}/books/bookborrow`,{
             method:"POST",
             headers:{"Content-Type": "application/json"},
             body:JSON.stringify({
@@ -75,7 +76,7 @@ class Books extends Component {
         e.preventDefault();
        this.props.returnBookfunc(book)
         console.log(this.props)
-        fetch("http://localhost:4000/books/returnbook",{
+        fetch(`${config().server}/books/returnbook`,{
             method:"POST",
             headers:{"Content-Type": "application/json"},
             body:JSON.stringify({

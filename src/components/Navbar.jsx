@@ -2,7 +2,7 @@ import React from "react"
 import {Nav,Form,FormControl,Navbar,Button} from "react-bootstrap"
 import ProfileIcon from "./ProfileIcon"
 import { connect } from "react-redux"
-
+import config from "../clientConfig"
 
  class Navigationbar extends React.Component{
    state={
@@ -10,7 +10,7 @@ import { connect } from "react-redux"
    }
   searchbook=(e)=>{
     e.preventDefault()
-    fetch("http://localhost:4000/books/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({search:this.state.search})})
+    fetch(`${config().server}/books/search`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({search:this.state.search})})
     .then(res=>res.json())
     .then(res1=>{
       this.props.SearchedBook([res1.book])
@@ -19,14 +19,14 @@ import { connect } from "react-redux"
   }
 
   SortbyAuthor=()=>{
-    fetch("http://localhost:4000/books/searchbyauthor",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({startIndex:this.props.currentPage,endIndex:this.props.nextPage})})
+    fetch(`${config().server}/books/searchbyauthor`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({startIndex:this.props.currentPage,endIndex:this.props.nextPage})})
     .then(res=>res.json())
     .then(res1=>{
       this.props.SearchedBook(res1.books)
       console.log(res1)})
   }
   SortbyTitle=()=>{
-    fetch("http://localhost:4000/books/searchbytitle",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({startIndex:this.props.currentPage,endIndex:this.props.nextPage})})
+    fetch(`${config().server}/books/searchbytitle`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({startIndex:this.props.currentPage,endIndex:this.props.nextPage})})
     .then(res=>res.json())
     .then(res1=>{
       this.props.SearchedBook(res1.books)

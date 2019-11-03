@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Dropdown,DropdownButton} from "react-bootstrap"
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
+import config from "../clientConfig"
 
 class ProfileIcon extends Component {
     handleSignout=()=>{
@@ -10,7 +11,7 @@ class ProfileIcon extends Component {
         this.props.history.push("/")
     }
     borrowBooks=()=>{
-            fetch("http://localhost:4000/userborrowedbooks",{
+            fetch(`${config().server}/userborrowedbooks`,{
                 method:"POST",
                 headers:{"Content-Type": "application/json"},
                 body:JSON.stringify({

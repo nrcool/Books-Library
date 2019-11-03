@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock,faUser } from '@fortawesome/free-solid-svg-icons'
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
+import config from "../clientConfig"
 
 
 class Login extends Component {
@@ -17,7 +18,7 @@ class Login extends Component {
             data.append(pair[0],pair[1])
         }
         e.target.reset()
-        fetch("http://localhost:4000/login",{method:"POST",body:data})
+        fetch(`${config().server}/login`,{method:"POST",body:data})
         .then(res=>res.json())
         .then(res1=>{
           if(res1.success){
