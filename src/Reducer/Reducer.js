@@ -34,6 +34,12 @@ const Reducer=(state=initialState,action)=>{
             return{
                 ...state,booksBorrowed:[...state.booksBorrowed,action.payload]
             }
+        case "bookreturn":
+            let index=state.booksBorrowed.indexOf(action.payload)
+            state.booksBorrowed.splice(index,1)
+            return {
+                ...state,booksBorrowed:[...state.booksBorrowed]
+            }
         case "searchbook":
             return {
                 ...state,books:action.payload
