@@ -10,12 +10,14 @@ import config from "../clientConfig"
    }
   searchbook=(e)=>{
     e.preventDefault()
-    fetch(`${config().server}/books/search`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({search:this.state.search})})
+    if(this.state.search.trim()!==""){
+        fetch(`${config().server}/books/search`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({search:this.state.search})})
     .then(res=>res.json())
     .then(res1=>{
       this.props.SearchedBook([res1.book])
       this.setState({search:""})
       console.log(res1)})
+    }
   }
 
   SortbyAuthor=()=>{
