@@ -23,7 +23,6 @@ class ProfileIcon extends Component {
     render() {
         return (
             <DropdownButton id="dropdown-basic-button" title="Profile">
-            <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
             <Dropdown.Item onClick={this.borrowBooks}>Books Borrowed</Dropdown.Item>
             <Dropdown.Item onClick={this.handleSignout}>SignOut</Dropdown.Item>
           </DropdownButton>

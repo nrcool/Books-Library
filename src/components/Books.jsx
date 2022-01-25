@@ -100,11 +100,11 @@ class Books extends Component {
    console.log(this.props.books)
    const allbooks=()=>{
     let booksData= this.props.books.map((book, i) => {
-        return (<Link to={{ pathname: `/${book.title}`, state: { book: book } }} key={i}> <Row className="bg-dark p-1 text-white" style={{ width: "500px", height:"200px", overflow:"hidden",padding:"5px",margin:"5px", boxShadow: "5px 2px 10px 10px black" }}>
+        return (<Link to={{ pathname: `/${book.title}`, state: { book: book } }} key={i}> <Row className="bg-dark p-1 text-white" style={{ width: "500px", height:"250px", overflow:"hidden",padding:"5px",margin:"5px", boxShadow: "5px 2px 10px 10px black" }}>
             <Col md={5} xs={5}>
-                <p>Book Title :<span>{book.title} </span></p>
-                <p>Author Name :<span>{book.authors[0]} </span></p>
-                <p>Year:<span>{book.publishedDate} </span></p>
+                <h3><span>{book.title} </span></h3>
+                <p><span>{book.authors[0]} </span></p>
+                <p><span>{book.publishedDate} </span></p>
             </Col>
             <Col md={3} xs={3} className="d-flex flex-column align-items-center">
                 <Button variant="success" className="bg-success"  onClick={(e)=>this.borrow(book,e)}>Borrow</Button>
@@ -123,9 +123,9 @@ class Books extends Component {
             <div className="booksBlock">
 
                 <Container className="bookContainer rounded mt-1 " >
-                    {!this.state.loading ? <>{allbooks()} <PaginationBasic
+                    {!this.state.loading ? <>{allbooks()} { allbooks().length>15 && <PaginationBasic
             handleActive={this.handleActive}
-        /></> : <Spinner style={{ marginTop: "20px", width: "300px", height: "300px" }} animation="border" as="h1" variant="dark" role="status">
+        />}</> : <Spinner style={{ marginTop: "20px", width: "300px", height: "300px" }} animation="border" as="h1" variant="dark" role="status">
                             <span className="sr-only text-white">Loading...</span>
                         </Spinner>}
                         <Modal show={this.state.show} onHide={this.handleHide}>
